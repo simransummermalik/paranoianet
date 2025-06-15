@@ -1,5 +1,7 @@
 # ParanoiaNet: AI-Powered Alternate Internet Simulation
 
+**A non-spoiler summary for players is available in nonSpoilerREADME.md for those who want to experience the story blind without any spoilers a readme would pose**
+
 **ParanoiaNet** is a psychological horror simulation disguised as a fake operating system. It’s an immersive web-based experience that evolves as you interact, blending **generative AI**, **timeline corruption**, and **dynamic content rewriting** into a single, narrative-driven technical showcase.
 
 ---
