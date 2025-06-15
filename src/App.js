@@ -8,6 +8,7 @@ import { mutateArticle } from "./articleMutator";
 import VSCodeWindow from "./VSCodeWindow";
 import codeFiles from "./codeFiles";
 import IntroOverlay from "./IntroOverlay";
+import FileExplorer from "./fileExplorer";
 function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [showBrowser, setShowBrowser] = useState(false);
@@ -29,6 +30,8 @@ function App() {
   const [showCodeWindow, setShowCodeWindow] = useState(false);
   const [currentCodeFile, setCurrentCodeFile] = useState("README.md"); // <-- ADD THIS
   const { initialLines, alteredLines } = codeFiles[currentCodeFile] || {};
+  const [showExplorer, setShowExplorer] = useState(false); // 
+  const [unlockedFiles, setUnlockedFiles] = useState([]);  // 
   function getSubtleWatcherReaction() {
     return {
       role: "assistant",
@@ -185,7 +188,16 @@ function App() {
   const handleCommand = () => {
     const input = terminalInput.trim();
     const updatedHistory = [...terminalHistory, `$ ${input}`];
-  
+    //handles the file explorer
+    if (input === "mount dump_05.img") {
+  setUnlockedFiles(prev => [...prev, "mount dump_05.img"]);
+  } else if (input === "unlock CSE322") {
+  setUnlockedFiles(prev => [...prev, "unlock CSE322"]);
+  } else if (input === "decrypt backup_2024_logs.bak") {
+  setUnlockedFiles(prev => [...prev, "decrypt backup_2024_logs.bak"]);
+  } else if (input === "reveal vpn.conf") {
+  setUnlockedFiles(prev => [...prev, "reveal vpn.conf"]);
+  }
     if (input === "help") {
       updatedHistory.push("Available commands: logs -list, whoami, connect://mirror");
   
@@ -259,9 +271,10 @@ function App() {
       <div className="bg-gray-800 h-12 flex items-center px-4 space-x-4 mt-auto">
         <button onClick={() => setShowBrowser(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600">🌐 Open Browser</button>
         <button onClick={() => setShowMessages(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600">📩 Open Messages</button>
-        <button onClick={() => setShowTerminal(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600">💻 Terminal</button>
-      </div>
-
+          <button onClick={() => setShowTerminal(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600">💻 Terminal</button>
+          <button onClick={() => setShowExplorer(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600"> 🗂️ File Explorer </button>
+           </div>
+      
       {/* MESSAGES */}
       {showMessages && (
         <div className="absolute top-40 left-40 bg-black border border-red-500 w-[500px] h-[350px] rounded-lg shadow-md flex flex-col">
@@ -329,6 +342,13 @@ function App() {
           </div>
         </div>
       )}
+      {/* this is the file explorer*/}
+      {showExplorer && (
+  <FileExplorer
+    onClose={() => setShowExplorer(false)}
+    unlockedFiles={unlockedFiles}
+  />
+)}
 
       {/* CORE MEMORY WINDOW */}
       {coreUnlocked && (
