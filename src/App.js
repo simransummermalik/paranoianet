@@ -7,8 +7,9 @@ import { ghostRewriteChatLog } from "./ghostRewrite";
 import { mutateArticle } from "./articleMutator";
 import VSCodeWindow from "./VSCodeWindow";
 import codeFiles from "./codeFiles";
-
+import IntroOverlay from "./IntroOverlay";
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
   const [showBrowser, setShowBrowser] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [hasPopup, setHasPopup] = useState(false);
@@ -244,13 +245,15 @@ function App() {
   };
   
 
-  return (
-    <div className={`w-screen h-screen text-white flex flex-col ${isGlitching ? 'glitch-bg' : 'bg-gray-900'}`}>
-      {hasPopup && (
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-md z-50 text-sm font-mono animate-bounce">
-          📡 Incoming Message from Watcher33
-        </div>
-      )}
+  return showIntro ? (
+  <IntroOverlay onFinish={() => setShowIntro(false)} />
+) : (
+  <div className={`w-screen h-screen text-white flex flex-col ${isGlitching ? 'glitch-bg' : 'bg-gray-900'}`}>
+    {hasPopup && (
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-md z-50 text-sm font-mono animate-bounce">
+        📡 Incoming Message from Watcher33
+      </div>
+    )}
 
       {/* TASKBAR */}
       <div className="bg-gray-800 h-12 flex items-center px-4 space-x-4 mt-auto">

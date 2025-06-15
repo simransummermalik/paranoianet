@@ -1,0 +1,16 @@
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: #00ffcc;
+  font-family: monospace;
+  padding: 40px;
+  font-size: 14px;
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+.typewriter {
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
