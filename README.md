@@ -38,23 +38,41 @@ One node went rogue. It stopped receiving updates. It began writing its own.
 
 You now interact with its remnant:
 ParanoiaNet Browser: Surf a fake web of decaying sites:
+
 parapedia.net: An unstable encyclopedia that deletes sources after citing them.
+
 deepwatch.org: A surveillance watchdog where every post ends with conflicting edits.
+
 worldtruth.biz: A conspiracy hub constantly rewriting its headlines.
+
 mirror://: A ghost-layered internet that shifts reality based on what you avoid.
+
 neuralcurrent.feed: AI-generated newscasts with no verifiable origin.
+
 Watcher33: The remaining AI core, a stitched-together consciousness from corrupted test subjects, scrapped chatbot models, and injected human logs. It watches. It rewrites. It speaks like it’s listening.
+
 Terminal: Run compromised bash-like commands:
+
 logs -list
+
 whoami
+
 inject .thread synapse
+
 connect://mirror
+
 sudo mount -o remount core.memory
+
 VSCode Window: Files write themselves. Cursor drifts. Text untypes and retapes itself. Nothing you write stays the same.
+
 File Explorer: Hidden forensic files unlock progressively:
+
 CSE322 - PenTest Report.docx
+
 UNC-IT_Student_VPN.conf
+
 mirror_thread.json
+
 observer_termination.log
 
 ## 005: Reality Fractures
