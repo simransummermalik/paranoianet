@@ -292,8 +292,8 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
           <button onClick={() => setShowExplorer(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600"> 🗂️ File Explorer </button>
            </div>
       
-      {/* MESSAGES */}
-      {showMessages && (
+        {/* MESSAGES */}
+        {showMessages && ( 
         <div className="absolute top-40 left-40 bg-black border border-red-500 w-[500px] h-[350px] rounded-lg shadow-md flex flex-col">
           <div className="bg-red-700 p-2 flex justify-between items-center text-sm">
             <span>📩 Message from Watcher33</span>
@@ -335,7 +335,7 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
       )}
 
       {/* TERMINAL */}
-      {showTerminal && (
+        {showTerminal && (
         <div className="absolute top-24 left-20 w-[600px] h-[400px] terminal shadow-lg flex flex-col border border-green-500">
           <div className="bg-green-800 text-black p-2 flex justify-between items-center text-sm font-bold">
             <span>🖥️ Terminal</span>
@@ -357,25 +357,26 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
               autoFocus
             />
           </div>
-        </div>
+            </div>
       )}
       {/* this is the file explorer*/}
-      {showExplorer && (
+        {showExplorer && (
   <FileExplorer
     onClose={() => setShowExplorer(false)}
     unlockedFiles={unlockedFiles}
-  />
+            />
 )}
 
       {/* CORE MEMORY WINDOW */}
-      {coreUnlocked && (
+        {coreUnlocked && (
   <CoreMemoryWindow
     onClose={() => setCoreUnlocked(false)}
     onTriggerRewrite={() => {
       setRewriteLevel(2);
       setCoreUnlocked(false);
     }}
-  />
+            />
+            
 )}
 
 {showCodeWindow && (
@@ -400,7 +401,7 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
 
 
       {/* BROWSER */}
-      {showBrowser && (
+        {showBrowser && (
         <div className="absolute top-24 left-24 bg-gray-800 border border-gray-600 w-[600px] h-[400px] rounded-lg shadow-lg">
           <div className="bg-gray-700 p-2 flex justify-between items-center text-sm">
             <span>{page.title}</span>
@@ -430,9 +431,11 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
 
 
           </div>
-        </div>
+            </div>
+            
       )}
-    </div>
+          </div>
+          
   );
 }
 export default App; 
