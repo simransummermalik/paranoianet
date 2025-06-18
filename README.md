@@ -9,6 +9,8 @@
  **The Story (Scroll down if you want the tech stack)**
 ParanoiaNet: Descent into the Corrupted Net (Extended Lore Edition)
 
+NEW ADDED FEATURES ON NEWFEATURES.MD (THESE MAY NOT BE ADDED TO THE README UNTIL IM DONE WITH THE PROJECT)
+
 ## 001: Discovery
 You are a penetration testing student at UNC Charlotte, enrolled in CSE322: Cybersecurity and Ethical Hacking. During a routine scan of your lab’s internal subnet for outdated SSH keys, you discover an unclassified node with a strange signature: 172.31.8.9. The string it returns reads: paranoianet-node handshake v0.98.
 It’s not in any lab inventory. You isolate the node in a sandboxed virtual environment and log in.
