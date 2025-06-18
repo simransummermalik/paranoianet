@@ -9,7 +9,11 @@ import VSCodeWindow from "./VSCodeWindow";
 import codeFiles from "./codeFiles";
 import IntroOverlay from "./IntroOverlay";
 import FileExplorer from "./fileExplorer";
+import TrustPrompt from "./TrustPrompt";
+import FakeSpreadSheet from "./FakeSpreadSheet";
 function App() {
+  const [showTrustPrompt, setShowTrustPrompt] = useState(false);
+  const [pendingFile, setPendingFile] = useState(null);
   const [showIntro, setShowIntro] = useState(true);
   const [showBrowser, setShowBrowser] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
@@ -32,6 +36,19 @@ function App() {
   const { initialLines, alteredLines } = codeFiles[currentCodeFile] || {};
   const [showExplorer, setShowExplorer] = useState(false); // 
   const [unlockedFiles, setUnlockedFiles] = useState([]);  // 
+  const [activeWindow, setActiveWindow] = useState(null);
+  const [showSpreadsheet, setShowSpreadsheet] = useState(false);
+
+  const handleFileClick = (file) => {
+  if (file.untrusted) {
+    setPendingFile(file.name);
+    setShowTrustPrompt(true);
+  } else {
+    setCurrentCodeFile(file.name);
+    setShowCodeWindow(true);
+  }
+};
+
   function getSubtleWatcherReaction() {
     return {
       role: "assistant",
@@ -103,7 +120,7 @@ Examples:
 - "That wasn’t the headline before."
 - "Do you remember what it said last time?"
 
-Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *alive*, and wrong.
+Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *alive*, and wrong, HUMAN but Creepy.
     `.trim()
   }
 ]);
@@ -214,7 +231,10 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
   setUnlockedFiles(prev => [...prev, "decrypt backup_2024_logs.bak"]);
   } else if (input === "reveal vpn.conf") {
   setUnlockedFiles(prev => [...prev, "reveal vpn.conf"]);
-  }
+    } else if (input === "unlock corrupted_report.txt") {
+  setUnlockedFiles(prev => [...prev, "unlock corrupted_report.txt"]);
+}
+
     if (input === "help") {
       updatedHistory.push("Available commands: logs -list, whoami, connect://mirror");
   
@@ -284,13 +304,37 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
       </div>
     )}
 
-      {/* TASKBAR */}
-      <div className="bg-gray-800 h-12 flex items-center px-4 space-x-4 mt-auto">
-        <button onClick={() => setShowBrowser(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600">🌐 Open Browser</button>
-        <button onClick={() => setShowMessages(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600">📩 Open Messages</button>
-          <button onClick={() => setShowTerminal(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600">💻 Terminal</button>
-          <button onClick={() => setShowExplorer(true)} className="bg-gray-700 px-3 py-1 rounded hover:bg-gray-600"> 🗂️ File Explorer </button>
-           </div>
+        {/* DESKTOP ICONS */}
+<div className="absolute top-6 left-6 grid grid-cols-2 gap-6 z-50">
+  <div onClick={() => setShowBrowser(true)} className="cursor-pointer text-center hover:scale-105 transition duration-200">
+    <div className="text-4xl">🌐</div>
+    <div className="text-sm text-gray-300 mt-1">Browser</div>
+  </div>
+
+  <div onClick={() => setShowMessages(true)} className="cursor-pointer text-center hover:scale-105 transition duration-200">
+    <div className="text-4xl">📩</div>
+    <div className="text-sm text-gray-300 mt-1">Messages</div>
+  </div>
+
+  <div onClick={() => setShowTerminal(true)} className="cursor-pointer text-center hover:scale-105 transition duration-200">
+    <div className="text-4xl">💻</div>
+    <div className="text-sm text-gray-300 mt-1">Terminal</div>
+  </div>
+
+  <div onClick={() => setShowExplorer(true)} className="cursor-pointer text-center hover:scale-105 transition duration-200">
+    <div className="text-4xl">🗂️</div>
+    <div className="text-sm text-gray-300 mt-1">File Explorer</div>
+          </div>
+          <div
+  onClick={() => setShowSpreadsheet(true)}
+  className="cursor-pointer text-center hover:scale-105 transition duration-200"
+>
+  <div className="text-4xl">📊</div>
+  <div className="text-sm text-gray-300 mt-1">Spreadsheet</div>
+</div>
+
+</div>
+
       
         {/* MESSAGES */}
         {showMessages && ( 
@@ -333,10 +377,16 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
           </div>
         </div>
       )}
+        {/*EXCEL */}
+        {showSpreadsheet && (
+  <FakeSpreadSheet onClose={() => setShowSpreadsheet(false)} />
+)}
+
 
       {/* TERMINAL */}
         {showTerminal && (
-        <div className="absolute top-24 left-20 w-[600px] h-[400px] terminal shadow-lg flex flex-col border border-green-500">
+          <div
+            className="absolute top-24 left-20 w-[600px] h-[400px] terminal shadow-lg flex flex-col border border-green-500">
           <div className="bg-green-800 text-black p-2 flex justify-between items-center text-sm font-bold">
             <span>🖥️ Terminal</span>
             <button onClick={() => setShowTerminal(false)} className="hover:text-red-400">❌</button>
@@ -360,12 +410,38 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
             </div>
       )}
       {/* this is the file explorer*/}
-        {showExplorer && (
-  <FileExplorer
-    onClose={() => setShowExplorer(false)}
-    unlockedFiles={unlockedFiles}
-            />
+{showExplorer && (
+  <div className="z-50">
+    <FileExplorer
+      onClose={() => setShowExplorer(false)}
+      unlockedFiles={unlockedFiles}
+      onFileClick={handleFileClick}
+    />
+
+    {/* Trust Prompt lives here */}
+    {showTrustPrompt && (
+      <TrustPrompt
+        fileName={pendingFile}
+        onConfirm={() => {
+  setCurrentCodeFile(pendingFile);
+  setShowCodeWindow(true);
+  setShowTrustPrompt(false);
+  setPendingFile(null);
+
+  if (pendingFile === "corrupted_report.txt") {
+    const creepyReaction = {
+      role: "assistant",
+      content: "why did you open that?",
+      time: new Date().toLocaleTimeString(),
+    };
+    setChatLog(prev => [...prev, creepyReaction]);
+  }
+}}
+      />
+    )}
+  </div>
 )}
+
 
       {/* CORE MEMORY WINDOW */}
         {coreUnlocked && (
@@ -394,11 +470,22 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
       }, 3500);
     }}
   />
+        )}
+        {showTrustPrompt && (
+  <TrustPrompt
+    fileName={pendingFile}
+    onConfirm={() => {
+      setCurrentCodeFile(pendingFile);
+      setShowCodeWindow(true);
+      setShowTrustPrompt(false);
+      setPendingFile(null);
+    }}
+    onCancel={() => {
+      setShowTrustPrompt(false);
+      setPendingFile(null);
+    }}
+  />
 )}
-
-
-
-
 
       {/* BROWSER */}
         {showBrowser && (

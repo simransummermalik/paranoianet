@@ -1,4 +1,25 @@
 const codeFiles = {
+  "corrupted_report.txt": {
+  initialLines: Array(15).fill(""), // starts blank
+  alteredLines: [
+    ">> LOG FILE: observer_report.txt",
+    "Subject: UNCC_Observer_17",
+    "Activity level: INCREASING",
+    "Last login: 3 minutes ago",
+    "Memory bleed threshold: [REDACTED]",
+    "",
+    "They are reading this.",
+    "This wasn't supposed to be visible.",
+    "",
+    "Erasing...",
+    "[███]███████]",
+    "Subject ID corrupted.",
+    "Rewriting: Subject = YOU.",
+    "",
+    "Did you consent to be logged?",
+  ],
+  editable: false
+},
     "README.md": {
       initialLines: [
         "# core.memory",

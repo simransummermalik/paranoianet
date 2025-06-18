@@ -1,11 +1,13 @@
 import React from "react";
 
-const FileExplorer = ({ onClose, unlockedFiles }) => {
+// Accept onFileClick as a prop
+const FileExplorer = ({ onClose, unlockedFiles, onFileClick }) => {
   const files = [
     { name: "CSE322 - PenTest Report.docx", requiredCommand: "unlock CSE322" },
     { name: "backup_2024_logs.bak", requiredCommand: "decrypt backup_2024_logs.bak" },
     { name: "UNC-IT_Student_VPN.conf", requiredCommand: "reveal vpn.conf" },
-    { name: "found_disk_dump_05.img", requiredCommand: "mount dump_05.img" }
+    { name: "found_disk_dump_05.img", requiredCommand: "mount dump_05.img" },
+    { name: "corrupted_report.txt", requiredCommand: "unlock corrupted_report.txt", untrusted: true }, // spooky file mwahaha
   ];
 
   return (
@@ -14,18 +16,25 @@ const FileExplorer = ({ onClose, unlockedFiles }) => {
         <span>🗂️ File Explorer</span>
         <button onClick={onClose} className="hover:text-red-400">❌</button>
       </div>
+
       <div className="p-4 space-y-3 overflow-y-auto">
         {files.map((file, i) => {
           const isUnlocked = unlockedFiles.includes(file.requiredCommand);
           return (
             <div key={i}>
               <span className="text-green-400">📁 {file.name}</span>
+
               {!isUnlocked ? (
-                <p className="text-gray-500 text-xs">🔒 Requires terminal command: <code>{file.requiredCommand}</code></p>
+                <p className="text-gray-500 text-xs">
+                  🔒 Requires terminal command: <code>{file.requiredCommand}</code>
+                </p>
               ) : (
-                <p className="text-gray-300 text-xs mt-1">
+                <p
+                  onClick={() => onFileClick(file)} // This triggers TrustPrompt or opens file random chance--- change here if it doesnt run!!!!
+                  className="text-gray-300 text-xs mt-1 hover:text-red-400 cursor-pointer"
+                >
                   ✅ Decrypted content: <br />
-                  <em>[Simulated file content for {file.name}]</em>
+                  <em>[Click to open {file.name}]</em>
                 </p>
               )}
             </div>
@@ -37,3 +46,4 @@ const FileExplorer = ({ onClose, unlockedFiles }) => {
 };
 
 export default FileExplorer;
+
