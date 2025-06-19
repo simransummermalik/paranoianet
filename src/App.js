@@ -11,6 +11,8 @@ import IntroOverlay from "./IntroOverlay";
 import FileExplorer from "./fileExplorer";
 import TrustPrompt from "./TrustPrompt";
 import FakeSpreadSheet from "./FakeSpreadSheet";
+import FaceTracker from "./FaceTracker";
+
 function App() {
   const [showTrustPrompt, setShowTrustPrompt] = useState(false);
   const [pendingFile, setPendingFile] = useState(null);
@@ -38,6 +40,8 @@ function App() {
   const [unlockedFiles, setUnlockedFiles] = useState([]);  // 
   const [activeWindow, setActiveWindow] = useState(null);
   const [showSpreadsheet, setShowSpreadsheet] = useState(false);
+  const [showFaceTracker, setShowFaceTracker] = useState(false);
+
 
   const handleFileClick = (file) => {
   if (file.untrusted) {
@@ -311,6 +315,10 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
     <div className="text-4xl">🌐</div>
     <div className="text-sm text-gray-300 mt-1">Browser</div>
   </div>
+    <div onClick={() => setShowFaceTracker(true)} className="cursor-pointer text-center hover:scale-105 transition duration-200">
+  <div className="text-4xl">📷</div>
+  <div className="text-sm text-gray-300 mt-1">Camera</div>
+</div>
 
   <div onClick={() => setShowMessages(true)} className="cursor-pointer text-center hover:scale-105 transition duration-200">
     <div className="text-4xl">📩</div>
@@ -333,7 +341,7 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
   <div className="text-4xl">📊</div>
   <div className="text-sm text-gray-300 mt-1">Spreadsheet</div>
 </div>
-
+    
 </div>
 
       
@@ -487,7 +495,7 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
     }}
   />
 )}
-
+  
       {/* BROWSER */}
         {showBrowser && (
         <div className="absolute top-24 left-24 bg-gray-800 border border-gray-600 w-[600px] h-[400px] rounded-lg shadow-lg">
@@ -515,13 +523,19 @@ Tone: cryptic, self-aware, never poetic, never robotic. Watcher33 should feel *a
                   <p className="text-sm text-gray-300">{article.content}</p>
                 </div>
               ))}
-            </div>
-
-
-          </div>
+                
             </div>
             
-      )}
+
+            </div>
+            
+            </div>
+            
+        )}
+          {showFaceTracker && (
+  <FaceTracker onClose={() => setShowFaceTracker(false)} />
+)}
+
           </div>
           
   );

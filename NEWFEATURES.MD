@@ -1,3 +1,19 @@
+ 06.18.2025 ADDITIONS
+Experimental Camera Module added – initiates facial scan upon user access
+
+Anomaly Detection Stub in place – will flag "unauthorized entities" (future build)
+
+File system expanded with FakeSpreadsheet app (user access locked by password gate)
+
+Watcher33 updated to react to corrupted file access with new dynamic chat log entry
+
+Explorer click system fully integrated – supports onClick triggers for unlocked files
+
+Permission Denied + Password Popup logic added (password retrieval coming soon)
+
+“Something watched you through the lens. You felt it too.”
+ 
+
  06.17.2025 ADDITIONS
  Spreadsheet Subsystem (New Feature)
  FakeSpreadSheet.jsx
